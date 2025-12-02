@@ -1795,8 +1795,11 @@ IMPORTANT:
         )}
 
         {/* Character Name and Image */}
-        <div className="mb-6 flex gap-4 items-start">
-          <div className="flex-shrink-0">
+        <div className="mb-6 grid grid-cols-[auto,1fr] gap-4 items-start">
+          <div className="flex-shrink-0 flex flex-col items-start gap-2">
+            <label className="block text-sm font-bold text-purple-300 w-full text-left">
+              Character Image
+            </label>
             <div className="w-32 h-32 bg-slate-700 rounded-lg border-2 border-purple-500 overflow-hidden flex items-center justify-center">
               {characterImage && !imageError ? (
                 <img
@@ -1820,29 +1823,29 @@ IMPORTANT:
               )}
             </div>
             <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                  setCharacterImage(event.target?.result as string); // 👈 assert to string
-                  setImageError(false);
-                };
-                reader.readAsDataURL(file);
-              }
-            }}
-            className="w-32 mt-2 text-xs bg-slate-700 border border-purple-500 rounded px-2 py-1 text-white file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-purple-600 file:text-white hover:file:bg-purple-700"
-          />
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  const reader = new FileReader();
+                  reader.onload = (event) => {
+                    setCharacterImage(event.target?.result as string); // 👈 assert to string
+                    setImageError(false);
+                  };
+                  reader.readAsDataURL(file);
+                }
+              }}
+              className="w-32 text-xs bg-slate-700 border border-purple-500 rounded px-2 py-1 text-white text-center file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-purple-600 file:text-white hover:file:bg-purple-700"
+            />
           </div>
-          <div className="flex-1">
+          <div className="flex-1 flex flex-col gap-3">
             <input
               type="text"
               value={characterName}
               onChange={(e) => setCharacterName(e.target.value)}
               placeholder="Character Name"
-              className="w-full text-3xl font-bold bg-slate-700 border-2 border-purple-500 rounded px-4 py-2 text-white placeholder-slate-400 mb-3"
+              className="w-full text-3xl font-bold bg-slate-700 border-2 border-purple-500 rounded px-4 py-2 text-white placeholder-slate-400"
             />
             <div className="bg-slate-700 rounded-lg border-2 border-purple-500 p-3">
               <label className="block text-sm font-bold mb-2 text-purple-300">
