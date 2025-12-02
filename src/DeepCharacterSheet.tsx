@@ -1796,7 +1796,10 @@ IMPORTANT:
 
         {/* Character Name and Image */}
         <div className="mb-6 flex gap-4 items-start">
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 flex flex-col items-center">
+            <label className="block text-sm font-bold mb-2 text-purple-300 text-center w-full">
+              Character Image
+            </label>
             <div className="w-32 h-32 bg-slate-700 rounded-lg border-2 border-purple-500 overflow-hidden flex items-center justify-center">
               {characterImage && !imageError ? (
                 <img
@@ -1820,21 +1823,21 @@ IMPORTANT:
               )}
             </div>
             <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                  setCharacterImage(event.target?.result as string); // 👈 assert to string
-                  setImageError(false);
-                };
-                reader.readAsDataURL(file);
-              }
-            }}
-            className="w-32 mt-2 text-xs bg-slate-700 border border-purple-500 rounded px-2 py-1 text-white file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-purple-600 file:text-white hover:file:bg-purple-700"
-          />
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  const reader = new FileReader();
+                  reader.onload = (event) => {
+                    setCharacterImage(event.target?.result as string); // 👈 assert to string
+                    setImageError(false);
+                  };
+                  reader.readAsDataURL(file);
+                }
+              }}
+              className="w-32 mt-2 text-xs bg-slate-700 border border-purple-500 rounded px-2 py-1 text-white text-center file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-purple-600 file:text-white hover:file:bg-purple-700"
+            />
           </div>
           <div className="flex-1">
             <input
