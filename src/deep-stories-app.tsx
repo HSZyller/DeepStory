@@ -188,28 +188,41 @@ export default function DeepStoriesApp() {
     }
   };
 
-  const importSession = (event) => {
+  const importSession = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-
+  
     const reader = new FileReader();
+  
     reader.onload = (e) => {
       try {
-        const data = JSON.parse(e.target.result);
+        const result = e.target?.result;
+  
+        if (typeof result !== "string") {
+          throw new Error("FileReader result is not a string");
+        }
+  
+        const data = JSON.parse(result);
+  
         if (data.storySoFar) setStorySoFar(data.storySoFar);
         if (data.characters) setCharacters(data.characters);
         if (data.dialogueHistory) setDialogueHistory(data.dialogueHistory);
         if (data.sceneContext) setSceneContext(data.sceneContext);
         if (data.sceneDirection) setSceneDirection(data.sceneDirection);
-        alert('Session loaded successfully!');
+  
+        alert("Session loaded successfully!");
         setShowSaveLoadModal(false);
       } catch (error) {
-        console.error('Error importing session:', error);
-        alert('Error loading file. Please make sure it\'s a valid Deep Stories save file.');
+        console.error("Error importing session:", error);
+        alert(
+          "Error loading file. Please make sure it's a valid Deep Stories save file."
+        );
       }
     };
+  
     reader.readAsText(file);
   };
+  
 
   const clearSession = () => {
     if (confirm('Are you sure you want to clear the entire session? This cannot be undone.')) {
@@ -224,56 +237,70 @@ export default function DeepStoriesApp() {
     }
   };
 
-  const importCharacter = (event) => {
+  const importCharacter = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-
+  
     const reader = new FileReader();
+  
     reader.onload = (e) => {
       try {
-        const data = JSON.parse(e.target.result);
-        
+        const result = e.target?.result;
+  
+        if (typeof result !== "string") {
+          throw new Error("FileReader result is not a string");
+        }
+  
+        const data = JSON.parse(result);
+  
         // Convert imported character format to app format
         const newChar = {
-          name: data.characterName || data.name || 'Unnamed Character',
+          name: data.characterName || data.name || "Unnamed Character",
           isNPC: importAsNPC,
           inScene: false,
-          appearance: data.appearance || '',
-          role: data.role || data.class || '',
-          notes: data.notes || data.background || '',
-          statValues: {}
+          appearance: data.appearance || "",
+          role: data.role || data.class || "",
+          notes: data.notes || data.background || "",
+          statValues: {} as Record<string, number>,
         };
-
+  
         // Map stats
         if (data.stats) {
-          const statMapping = {
-            'Strength': 'STR',
-            'Speed': 'SPD', 
-            'Sight': 'SIT',
-            'Stealth': 'STH',
-            'Search': 'SRC',
-            'Charm': 'CRM',
-            'Special': 'SPL',
-            'Luck': 'LUK'
+          const statMapping: Record<string, string> = {
+            Strength: "STR",
+            Speed: "SPD",
+            Sight: "SIT",
+            Stealth: "STH",
+            Search: "SRC",
+            Charm: "CRM",
+            Special: "SPL",
+            Luck: "LUK",
           };
-
+  
           Object.entries(data.stats).forEach(([key, value]) => {
             const mappedKey = statMapping[key] || key;
-            newChar.statValues[mappedKey] = value;
+            (newChar.statValues as any)[mappedKey] = value as number;
           });
         }
-
+  
         setCharacters([...characters, newChar]);
         setShowImportCharModal(false);
-        alert(`Character "${newChar.name}" imported successfully as ${importAsNPC ? 'NPC' : 'Player Character'}!`);
-        
+        alert(
+          `Character "${newChar.name}" imported successfully as ${
+            importAsNPC ? "NPC" : "Player Character"
+          }!`
+        );
       } catch (error) {
-        console.error('Error importing character:', error);
-        alert('Error loading character file. Please make sure it\'s a valid JSON character file.');
+        console.error("Error importing character:", error);
+        alert(
+          "Error loading character file. Please make sure it's a valid JSON character file."
+        );
       }
     };
+  
     reader.readAsText(file);
   };
+  
 
   const exportCharacter = (index) => {
     try {

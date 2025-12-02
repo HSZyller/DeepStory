@@ -384,16 +384,27 @@ export default function CharacterSheet() {
     }
   };
 
-  const handleImportFile = (event) => {
-    const file = event.target.files[0];
+  const handleImportFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
+  
       reader.onload = (e) => {
-        setImportText(e.target.result);
+        const result = e.target?.result;
+  
+        if (typeof result === "string") {
+          setImportText(result);
+        } else if (result instanceof ArrayBuffer) {
+          // Just in case, decode ArrayBuffer to string
+          const decoded = new TextDecoder("utf-8").decode(result);
+          setImportText(decoded);
+        }
       };
+  
       reader.readAsText(file);
     }
   };
+  
 
   const newCharacter = () => {
     console.log('New Character button clicked');
@@ -1617,7 +1628,7 @@ IMPORTANT:
                   onChange={(e) => setAICharacterPrompt(e.target.value)}
                   placeholder="e.g., 'A cunning elven rogue with a mysterious past, skilled in stealth and deception' or 'A brave human knight devoted to protecting the innocent' or 'A wise old wizard specializing in fire magic'"
                   className="w-full bg-slate-700 border border-indigo-500 rounded px-3 py-2 text-white placeholder-slate-400"
-                  rows="4"
+                  rows={4}
                   disabled={generatingCharacter}
                 />
               </div>
@@ -1809,21 +1820,21 @@ IMPORTANT:
               )}
             </div>
             <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                const file = e.target.files[0];
-                if (file) {
-                  const reader = new FileReader();
-                  reader.onload = (event) => {
-                    setCharacterImage(event.target.result);
-                    setImageError(false);
-                  };
-                  reader.readAsDataURL(file);
-                }
-              }}
-              className="w-32 mt-2 text-xs bg-slate-700 border border-purple-500 rounded px-2 py-1 text-white file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-purple-600 file:text-white hover:file:bg-purple-700"
-            />
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                  setCharacterImage(event.target?.result as string); // 👈 assert to string
+                  setImageError(false);
+                };
+                reader.readAsDataURL(file);
+              }
+            }}
+            className="w-32 mt-2 text-xs bg-slate-700 border border-purple-500 rounded px-2 py-1 text-white file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-purple-600 file:text-white hover:file:bg-purple-700"
+          />
           </div>
           <div className="flex-1">
             <input
@@ -1842,7 +1853,7 @@ IMPORTANT:
                 onChange={(e) => setAppearance(e.target.value)}
                 placeholder="Describe your character's appearance..."
                 className="w-full bg-slate-600 border border-slate-500 rounded px-3 py-2 text-white placeholder-slate-400"
-                rows="2"
+                rows={2}
               />
             </div>
           </div>
@@ -2354,7 +2365,7 @@ IMPORTANT:
                       }
                       placeholder="Description / Effect"
                       className="w-full bg-slate-600 border border-slate-500 rounded px-3 py-1 text-white placeholder-slate-400 mb-2"
-                      rows="2"
+                      rows={2}
                     />
                     {ability.sourceItem !== null &&
                       ability.sourceItem !== undefined && (
@@ -2585,7 +2596,7 @@ IMPORTANT:
                         }
                         placeholder="Describe what this item looks like..."
                         className="w-full bg-slate-600 border border-slate-500 rounded px-3 py-2 text-white placeholder-slate-400"
-                        rows="2"
+                        rows={2}
                       />
                     </div>
 
@@ -2674,7 +2685,7 @@ IMPORTANT:
                         }
                         placeholder="Describe any special effects, abilities, or bonuses this item provides..."
                         className="w-full bg-slate-600 border border-slate-500 rounded px-3 py-2 text-white placeholder-slate-400"
-                        rows="3"
+                        rows={3}
                       />
                     </div>
 
@@ -2740,7 +2751,7 @@ IMPORTANT:
                             }}
                             placeholder="Description of the negative effect..."
                             className="w-full bg-slate-600 border border-slate-500 rounded px-2 py-1 text-white text-sm placeholder-slate-400"
-                            rows="2"
+                            rows={2}
                           />
 
                           <div className="bg-slate-600 rounded p-2">
@@ -3057,7 +3068,7 @@ IMPORTANT:
                         }
                         placeholder="Describe what happened and the ongoing effect..."
                         className="w-full bg-slate-600 border border-slate-500 rounded px-3 py-2 text-white placeholder-slate-400"
-                        rows="2"
+                        rows={2}
                       />
                     </div>
 
@@ -3399,7 +3410,7 @@ IMPORTANT:
                         }
                         placeholder="Write a summary of what happened in this session..."
                         className="w-full bg-slate-600 border border-slate-500 rounded px-3 py-2 text-white placeholder-slate-400"
-                        rows="5"
+                        rows={5}
                       />
                     </div>
 
@@ -3484,7 +3495,7 @@ IMPORTANT:
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Character background, session notes, lore, etc."
             className="w-full bg-slate-700 border border-slate-500 rounded px-4 py-3 text-white placeholder-slate-400"
-            rows="6"
+            rows={6}
           />
         </div>
       </div>
