@@ -2889,7 +2889,7 @@ IMPORTANT:
                   // View Mode
                   <div className="bg-slate-700 rounded p-3 hover:bg-slate-600 transition-colors">
                     <div className="flex items-center justify-between gap-3">
-                      <div className="flex-1">
+                      <div className="flex-1 flex-col">
                         <div className="font-bold text-white">
                           {item.name || 'Unnamed Item'}
                         </div>
