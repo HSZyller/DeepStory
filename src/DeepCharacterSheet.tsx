@@ -1839,7 +1839,6 @@ IMPORTANT:
               className="w-32 mt-2 text-xs bg-slate-700 border border-purple-500 rounded px-2 py-1 text-white text-center file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-purple-600 file:text-white hover:file:bg-purple-700"
             />
           </div>
-          <div className='flex flex-col'>
           <div className="flex-1">
             <input
               type="text"
@@ -1848,7 +1847,6 @@ IMPORTANT:
               placeholder="Character Name"
               className="w-full text-3xl font-bold bg-slate-700 border-2 border-purple-500 rounded px-4 py-2 text-white placeholder-slate-400 mb-3"
             />
-            </div>
             <div className="bg-slate-700 rounded-lg border-2 border-purple-500 p-3">
               <label className="block text-sm font-bold mb-2 text-purple-300">
                 Appearance
@@ -1861,7 +1859,7 @@ IMPORTANT:
                 rows={2}
               />
             </div>
-            </div>
+          </div>
         </div>
 
         {/* Dice Roller */}
@@ -2398,7 +2396,7 @@ IMPORTANT:
                   // View Mode
                   <div className="bg-slate-700 rounded p-3 hover:bg-slate-600 transition-colors">
                     <div className="flex items-start justify-between gap-3">
-                      <div className="flex-1 flex-col">
+                      <div className="flex-1">
                         <div className="font-bold text-white">
                           {ability.name || 'Unnamed Ability'}
                           <span className="ml-2 text-xs text-slate-400">
@@ -2888,7 +2886,7 @@ IMPORTANT:
                   // View Mode
                   <div className="bg-slate-700 rounded p-3 hover:bg-slate-600 transition-colors">
                     <div className="flex items-center justify-between gap-3">
-                      <div className="flex-1  flex-col">
+                      <div className="flex-1">
                         <div className="font-bold text-white">
                           {item.name || 'Unnamed Item'}
                         </div>
@@ -3199,7 +3197,7 @@ IMPORTANT:
                   // View Mode
                   <div className="bg-slate-700 rounded p-4 border-l-4 border-orange-500 hover:bg-slate-600 transition-colors">
                     <div className="flex items-start justify-between gap-3">
-                      <div className="flex-1 flex-col">
+                      <div className="flex-1">
                         <div className="font-bold text-white text-lg mb-1">
                           {consequence.name || 'Unnamed Consequence'}
                         </div>
