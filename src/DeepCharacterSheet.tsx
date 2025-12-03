@@ -1839,16 +1839,19 @@ IMPORTANT:
               className="w-32 text-xs bg-slate-700 border border-purple-500 rounded px-2 py-1 text-white text-center file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-purple-600 file:text-white hover:file:bg-purple-700"
             />
           </div>
-          <div className="flex-1 flex flex-col gap-3">
-            <input
-              type="text"
-              value={characterName}
-              onChange={(e) => setCharacterName(e.target.value)}
-              placeholder="Character Name"
-              className="w-full text-3xl font-bold bg-slate-700 border-2 border-purple-500 rounded px-4 py-2 text-white placeholder-slate-400"
-            />
-            <div className="bg-slate-700 rounded-lg border-2 border-purple-500 p-3">
-              <label className="block text-sm font-bold mb-2 text-purple-300">
+          <div className="flex-1 grid grid-rows-[auto_auto] gap-3">
+            <div className="flex flex-col gap-1">
+              <label className="block text-sm font-bold text-purple-300">Character Name</label>
+              <input
+                type="text"
+                value={characterName}
+                onChange={(e) => setCharacterName(e.target.value)}
+                placeholder="Character Name"
+                className="w-full text-3xl font-bold bg-slate-700 border-2 border-purple-500 rounded px-4 py-2 text-white placeholder-slate-400"
+              />
+            </div>
+            <div className="bg-slate-700 rounded-lg border-2 border-purple-500 p-3 flex flex-col gap-2">
+              <label className="block text-sm font-bold text-purple-300">
                 Appearance
               </label>
               <textarea
