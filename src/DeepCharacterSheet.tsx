@@ -3200,7 +3200,7 @@ IMPORTANT:
                   // View Mode
                   <div className="bg-slate-700 rounded p-4 border-l-4 border-orange-500 hover:bg-slate-600 transition-colors">
                     <div className="flex items-start justify-between gap-3">
-                      <div className="flex-1">
+                      <div className="flex-1 flex-col">
                         <div className="font-bold text-white text-lg mb-1">
                           {consequence.name || 'Unnamed Consequence'}
                         </div>
